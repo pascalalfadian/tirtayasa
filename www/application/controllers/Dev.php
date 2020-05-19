@@ -20,6 +20,14 @@ class Dev extends CI_Controller {
     }
 
     public function index() {
+		if ($this->input->get('utm_campaign') !== 'prefer_old') {
+			http_response_code(301);
+			$get = $this->input->get();
+			$get['utm_source'] = 'kiri.travel';
+			$get['utm_campaign'] = 'newhome';
+			header('Location: https://projectkiri.id?' . http_build_query($get));
+			exit();
+		}
         if ($this->session->has_userdata('email')) {
             $this->session->keep_flashdata('message');
             redirect('/dev/apikeys');

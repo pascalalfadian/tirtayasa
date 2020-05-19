@@ -3,6 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Mainpage extends CI_Controller {
 	public function index() {
+		if ($this->input->get('utm_campaign') !== 'prefer_old') {
+			http_response_code(301);
+			$get = $this->input->get();
+			$get['utm_source'] = 'kiri.travel';
+			$get['utm_campaign'] = 'newhome';
+			header('Location: https://projectkiri.id?' . http_build_query($get));
+			exit();
+		}
 		$this->load->config('tirtayasa');
 
 		// Setup locale
